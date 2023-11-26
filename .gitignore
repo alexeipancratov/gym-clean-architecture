@@ -307,3 +307,6 @@ MigrationBackup/
 
 # Fody
 FodyWeavers.xml
+
+# Mac OS DC Store files
+.DS_Store
