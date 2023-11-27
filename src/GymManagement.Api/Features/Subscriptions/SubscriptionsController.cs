@@ -1,3 +1,5 @@
+using Ardalis.Result;
+using Ardalis.Result.AspNetCore;
 using GymManagement.Application.Subscriptions.Commands.CreateSubscription;
 using GymManagement.Contracts.Subscriptions;
 using MediatR;
@@ -17,13 +19,13 @@ namespace GymManagement.Api.Features.Subscriptions
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSubscription(CreateSubscriptionRequest request)
+        public async Task<ActionResult<SubscriptionResponse>> CreateSubscription(CreateSubscriptionRequest request)
         {
-            var subscriptionId = await _sender.Send(new CreateSubscriptionCommand(request.SubscriptionType.ToString(), request.AdminId));
+            var result = await _sender.Send(new CreateSubscriptionCommand(request.SubscriptionType.ToString(), request.AdminId));
 
-            var response = new SubscriptionResponse(subscriptionId, request.SubscriptionType);
-
-            return Ok(response);
+            return result
+                .Map(subscriptionId => new SubscriptionResponse(subscriptionId, request.SubscriptionType))
+                .ToActionResult(this);
         }
     }
 }

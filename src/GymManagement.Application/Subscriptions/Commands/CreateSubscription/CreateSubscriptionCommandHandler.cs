@@ -1,11 +1,12 @@
+using Ardalis.Result;
 using MediatR;
 
 namespace GymManagement.Application.Subscriptions.Commands.CreateSubscription;
 
-public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscriptionCommand, Guid>
+public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscriptionCommand, Result<Guid>>
 {
-    public Task<Guid> Handle(CreateSubscriptionCommand request, CancellationToken cancellationToken)
+    public Task<Result<Guid>> Handle(CreateSubscriptionCommand request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(Guid.NewGuid());
+        return Task.FromResult(Result.Success(Guid.NewGuid()));
     }
 }
