@@ -1,5 +1,6 @@
-using GymManagement.Application.Services;
+using GymManagement.Application.Subscriptions.Commands.CreateSubscription;
 using GymManagement.Contracts.Subscriptions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymManagement.Api.Features.Subscriptions
@@ -8,19 +9,17 @@ namespace GymManagement.Api.Features.Subscriptions
     [Route("api/[controller]")]
     public class SubscriptionsController : ControllerBase
     {
-        private readonly ISubscriptionService _subscriptionService;
+        private readonly ISender _sender;
 
-        public SubscriptionsController(ISubscriptionService subscriptionService)
+        public SubscriptionsController(ISender sender)
         {
-            _subscriptionService = subscriptionService;
+            _sender = sender;
         }
 
         [HttpPost]
-        public IActionResult CreateSubscription(CreateSubscriptionRequest request)
+        public async Task<IActionResult> CreateSubscription(CreateSubscriptionRequest request)
         {
-            var subscriptionId = _subscriptionService.CreateSubscription(
-                request.SubscriptionType.ToString(),
-                request.AdminId);
+            var subscriptionId = await _sender.Send(new CreateSubscriptionCommand(request.SubscriptionType.ToString(), request.AdminId));
 
             var response = new SubscriptionResponse(subscriptionId, request.SubscriptionType);
 

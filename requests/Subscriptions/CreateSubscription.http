@@ -8,8 +8,3 @@ Content-Type: application/json
     "subscriptionType": "Free",
     "adminId": "{{adminId}}"
 }
-
-# {
-#     "Id": "5f3b3b7b-5b9a-4b9e-9b0a-9f0b0b0b0b0b",
-#     "SubscriptionType": "Free" // Starter, Free
-# }
