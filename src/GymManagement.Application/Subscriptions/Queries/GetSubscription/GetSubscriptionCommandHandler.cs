@@ -1,6 +1,5 @@
 using Ardalis.Result;
 using GymManagement.Application.Common.Interfaces;
-using GymManagement.Application.Subscriptions.Commands.GetSubscription;
 using GymManagement.Domain.Subscriptions;
 using MediatR;
 

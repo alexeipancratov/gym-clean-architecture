@@ -1,7 +1,7 @@
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
 using GymManagement.Application.Subscriptions.Commands.CreateSubscription;
-using GymManagement.Application.Subscriptions.Commands.GetSubscription;
+using GymManagement.Application.Subscriptions.Queries.GetSubscription;
 using GymManagement.Contracts.Subscriptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
