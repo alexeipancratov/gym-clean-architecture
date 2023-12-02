@@ -24,11 +24,6 @@ In order to run the project, follow these steps:
 dotnet run --project src/GymManagement.Api
 ```
 
-And make a GET HTTP request to the following URL:
-```
-http://localhost:5238/WeatherForecast
-```
-
 ## License
 
 None
