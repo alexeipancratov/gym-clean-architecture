@@ -13,7 +13,7 @@ public static class DependencyInjection
         // Persistence
         services.AddDbContext<GymManagementDbContext>(options =>
         {
-            options.UseSqlite("Data Source=gym-management.db");
+            options.UseSqlite("Data Source=gym-mgmt.db");
         });
         // TODO: Test if registering implementation directly works too.
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<GymManagementDbContext>());

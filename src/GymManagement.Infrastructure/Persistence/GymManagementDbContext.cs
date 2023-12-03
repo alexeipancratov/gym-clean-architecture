@@ -1,3 +1,4 @@
+using System.Reflection;
 using GymManagement.Application.Common.Interfaces;
 using GymManagement.Domain.Subscriptions;
 using Microsoft.EntityFrameworkCore;
@@ -15,5 +16,11 @@ public class GymManagementDbContext : DbContext, IUnitOfWork
     public Task<int> CommitChangesAsync(CancellationToken cancellationToken = default)
     {
         return SaveChangesAsync(cancellationToken);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        base.OnModelCreating(modelBuilder);
     }
 }

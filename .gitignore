@@ -310,3 +310,7 @@ FodyWeavers.xml
 
 # Mac OS DC Store files
 .DS_Store
+
+gym-mgmt.db
+gym-mgmt.db-shm
+gym-mgmt.db-wal
