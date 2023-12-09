@@ -1,0 +1,9 @@
+@host=http://localhost:5238
+@subscriptionId = 8C764A79-1199-4A32-B86F-A757F21B546A
+
+POST {{host}}/subscriptions/{{subscriptionId}}/gyms
+Content-Type: application/json
+
+{
+  "Name": "Alexei's gym"
+}

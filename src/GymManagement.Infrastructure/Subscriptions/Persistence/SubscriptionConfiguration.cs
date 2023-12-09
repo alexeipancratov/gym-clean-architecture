@@ -2,7 +2,7 @@ using GymManagement.Domain.Subscriptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GymManagement.Infrastructure.Persistence.DbConfigurations;
+namespace GymManagement.Infrastructure.Subscriptions.Persistence;
 
 public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
 {
@@ -12,6 +12,9 @@ public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
 
         builder.Property(s => s.Id)
             .ValueGeneratedNever();
+        
+        builder.Property("_maxGyms")
+            .HasColumnName("MaxGyms");
 
         builder.Property("_adminId")
             .HasColumnName("AdminId");

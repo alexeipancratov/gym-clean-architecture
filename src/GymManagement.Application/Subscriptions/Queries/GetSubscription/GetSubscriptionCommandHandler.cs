@@ -16,7 +16,8 @@ public class GetSubscriptionCommandHandler : IRequestHandler<GetSubscriptionComm
 
     public async Task<Result<Subscription>> Handle(GetSubscriptionCommand request, CancellationToken cancellationToken)
     {
-        var subscription = await _subscriptionsRepository.GetSubscriptionAsync(request.SubscriptionId);
+        var subscription = await _subscriptionsRepository.GetByIdAsync(request.SubscriptionId,
+            cancellationToken);
 
         return subscription is null
             ? Result<Subscription>.NotFound()

@@ -24,7 +24,7 @@ public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscripti
             subscriptionType: request.SubscriptionType,
             adminId: request.AdminId);
 
-        await _subscriptionsRepository.AddSubscription(subscription);
+        await _subscriptionsRepository.AddSubscription(subscription, cancellationToken);
 
         await _unitOfWork.CommitChangesAsync(cancellationToken);
         
