@@ -1,4 +1,4 @@
-@host=http://localhost:5238
+@host=https://localhost:7047
 @subscriptionId = 8C764A79-1199-4A32-B86F-A757F21B546A
 
 POST {{host}}/subscriptions/{{subscriptionId}}/gyms

@@ -1,3 +1,4 @@
+using System.Net;
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
 using GymManagement.Application.Gyms.Commands;
@@ -19,12 +20,12 @@ public class GymsController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<GymResponse>> CreateGym(CreateGymRequest request, Guid subscriptionId)
+    [TranslateResultToActionResult]
+    public async Task<Result<GymResponse>> CreateGym(CreateGymRequest request, Guid subscriptionId)
     {
         var result = await _sender.Send(new CreateGymCommand(request.Name, subscriptionId));
 
         return result
-            .Map(gym => new GymResponse(gym.Id, gym.Name))
-            .ToActionResult(this);
+            .Map(gym => new GymResponse(gym.Id, gym.Name));
     }
 }

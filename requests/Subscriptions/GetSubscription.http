@@ -1,4 +1,4 @@
-@host=http://localhost:5238
+@host=https://localhost:7047
 @subscriptionId=8c764a79-1199-4a32-b86f-a757f21b546a
 
 GET {{host}}/api/subscriptions/{{subscriptionId}}
