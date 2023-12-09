@@ -1,3 +1,5 @@
+<img src="https://github.com/alexeipancratov/gym-clean-architecture/assets/3188163/6dc0c717-1b7e-46f8-a34f-12f3d41c30aa" width=350 />
+
 # Gym Clean Architecture
 
 Gym Clean Architecture is a sample project that demonstrates how to implement the Clean Architecture in a .NET application.
