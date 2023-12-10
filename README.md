@@ -6,9 +6,15 @@ Gym Clean Architecture is a sample project that demonstrates how to implement th
 
 ## Table of Contents
 
+- [Tech stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
+
+## Tech stack
+
+- .NET 8
+- EF Core 8
 
 ## Installation
 
