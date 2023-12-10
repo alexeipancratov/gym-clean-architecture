@@ -10,20 +10,13 @@ namespace GymManagement.Api.Features.Gyms;
 
 [ApiController]
 [Route("subscriptions/{subscriptionId:guid}/gyms")]
-public class GymsController : ControllerBase
+public class GymsController(ISender sender) : ControllerBase
 {
-    private readonly ISender _sender;
-
-    public GymsController(ISender sender)
-    {
-        _sender = sender;
-    }
-    
     [HttpPost]
     [TranslateResultToActionResult]
     public async Task<Result<GymResponse>> CreateGym(CreateGymRequest request, Guid subscriptionId)
     {
-        var result = await _sender.Send(new CreateGymCommand(request.Name, subscriptionId));
+        var result = await sender.Send(new CreateGymCommand(request.Name, subscriptionId));
 
         return result
             .Map(gym => new GymResponse(gym.Id, gym.Name));

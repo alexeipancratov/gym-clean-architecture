@@ -1,3 +1,7 @@
+using Ardalis.Result;
+using GymManagement.Domain.Rooms;
+using Throw;
+
 namespace GymManagement.Domain.Gyms;
 
 public class Gym
@@ -23,4 +27,18 @@ public class Gym
     }
     
     private Gym() {}
+
+    public Result AddRoom(Room room)
+    {
+        _roomIds.Throw().IfContains(room.Id);
+        
+        if (_roomIds.Count >= _maxRooms)
+        {
+            return Result.Invalid(GymErrors.CannotHaveMoreRoomsThanSubscriptionAllows);
+        }
+        
+        _roomIds.Add(room.Id);
+        
+        return Result.Success();
+    }
 }
