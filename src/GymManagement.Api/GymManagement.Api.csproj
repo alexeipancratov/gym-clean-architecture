@@ -1,15 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6cc6921f-79e9-480d-a25b-3e06b0d6bd14</UserSecretsId>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Ardalis.Result.AspNetCore" Version="7.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
