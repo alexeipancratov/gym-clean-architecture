@@ -1,4 +1,3 @@
-using System.Net;
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
 using GymManagement.Application.Gyms.Commands;
