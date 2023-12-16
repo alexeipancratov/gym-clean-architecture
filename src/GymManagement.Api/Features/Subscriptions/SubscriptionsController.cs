@@ -11,14 +11,9 @@ namespace GymManagement.Api.Features.Subscriptions
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SubscriptionsController : ControllerBase
+    public class SubscriptionsController(ISender sender) : ControllerBase
     {
-        private readonly ISender _sender;
-
-        public SubscriptionsController(ISender sender)
-        {
-            _sender = sender;
-        }
+        private readonly ISender _sender = sender;
 
         [HttpPost]
         public async Task<ActionResult<SubscriptionResponse>> CreateSubscription(CreateSubscriptionRequest request)

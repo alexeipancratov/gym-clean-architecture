@@ -5,14 +5,10 @@ using MediatR;
 
 namespace GymManagement.Application.Subscriptions.Queries.GetSubscription;
 
-public class GetSubscriptionCommandHandler : IRequestHandler<GetSubscriptionCommand, Result<Subscription>>
+public class GetSubscriptionCommandHandler(ISubscriptionsRepository subscriptionsRepository)
+    : IRequestHandler<GetSubscriptionCommand, Result<Subscription>>
 {
-    private readonly ISubscriptionsRepository _subscriptionsRepository;
-
-    public GetSubscriptionCommandHandler(ISubscriptionsRepository subscriptionsRepository)
-    {
-        _subscriptionsRepository = subscriptionsRepository;
-    }
+    private readonly ISubscriptionsRepository _subscriptionsRepository = subscriptionsRepository;
 
     public async Task<Result<Subscription>> Handle(GetSubscriptionCommand request, CancellationToken cancellationToken)
     {
