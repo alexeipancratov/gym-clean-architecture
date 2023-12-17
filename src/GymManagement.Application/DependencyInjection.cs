@@ -1,7 +1,5 @@
-using Ardalis.Result;
-using GymManagement.Application.Gyms.Commands;
-using GymManagement.Domain.Gyms;
-using MediatR;
+using FluentValidation;
+using GymManagement.Application.Common.Behaviors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GymManagement.Application;
@@ -13,8 +11,10 @@ public static class DependencyInjection
         services.AddMediatR(options =>
         {
             options.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection));
-            options.AddBehavior<IPipelineBehavior<CreateGymCommand, Result<Gym>>, CreateGymCommandBehavior>();
+            options.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
+
+        services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection));
 
         return services;
     }
