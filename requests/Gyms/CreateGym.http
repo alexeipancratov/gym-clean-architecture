@@ -5,5 +5,5 @@ POST {{host}}/subscriptions/{{subscriptionId}}/gyms
 Content-Type: application/json
 
 {
-  "Name": "Alexei's gym"
+  "name": "A"
 }
