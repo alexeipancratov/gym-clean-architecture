@@ -9,4 +9,6 @@ public interface ISubscriptionsRepository
     ValueTask<Subscription?> GetByIdAsync(Guid subscriptionId, CancellationToken cancellationToken = default);
     
     Task UpdateAsync(Subscription subscription, CancellationToken cancellationToken);
+    
+    void Delete(Subscription subscription);
 }

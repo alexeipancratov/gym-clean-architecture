@@ -9,4 +9,9 @@ public interface IGymsRepository
     ValueTask<Gym?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     
     void Update(Gym gym);
+    
+    Task<IReadOnlyList<Gym>> ListBySubscriptionIdAsync(Guid subscriptionId,
+        CancellationToken cancellationToken = default);
+    
+    void RemoveRange(IEnumerable<Gym> gyms);
 }

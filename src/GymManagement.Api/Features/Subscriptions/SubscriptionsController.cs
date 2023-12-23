@@ -1,6 +1,7 @@
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
 using GymManagement.Application.Subscriptions.Commands.CreateSubscription;
+using GymManagement.Application.Subscriptions.Commands.DeleteSubscription;
 using GymManagement.Application.Subscriptions.Queries.GetSubscription;
 using GymManagement.Contracts.Subscriptions;
 using MediatR;
@@ -41,6 +42,12 @@ namespace GymManagement.Api.Features.Subscriptions
                     subscription.Id,
                     Enum.Parse<SubscriptionType>(subscription.SubscriptionType.Name)))
                 .ToActionResult(this);
+        }
+
+        [HttpDelete("{subscriptionId}")]
+        public Task<Result> DeleteSubscription(Guid subscriptionId)
+        {
+            return _sender.Send(new DeleteSubscriptionCommand(subscriptionId));
         }
     }
 }

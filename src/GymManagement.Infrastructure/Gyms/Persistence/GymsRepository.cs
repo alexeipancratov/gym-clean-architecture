@@ -1,6 +1,7 @@
 using GymManagement.Application.Common.Interfaces;
 using GymManagement.Domain.Gyms;
 using GymManagement.Infrastructure.Common.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymManagement.Infrastructure.Gyms.Persistence;
 
@@ -21,5 +22,18 @@ public class GymsRepository(GymManagementDbContext dbContext) : IGymsRepository
     public void Update(Gym gym)
     {
         _dbContext.Gyms.Update(gym);
+    }
+
+    public async Task<IReadOnlyList<Gym>> ListBySubscriptionIdAsync(Guid subscriptionId,
+        CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Gyms
+            .Where(gym => gym.SubscriptionId == subscriptionId)
+            .ToListAsync(cancellationToken);
+    }
+    
+    public void RemoveRange(IEnumerable<Gym> gyms)
+    {
+        _dbContext.Gyms.RemoveRange(gyms);
     }
 }
