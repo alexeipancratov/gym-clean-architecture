@@ -3,7 +3,7 @@ using GymManagement.Application.Common.Interfaces;
 using GymManagement.Domain.Gyms;
 using MediatR;
 
-namespace GymManagement.Application.Gyms.Commands;
+namespace GymManagement.Application.Gyms.Commands.CreateGym;
 
 public class CreateGymCommandHandler(
     IUnitOfWork unitOfWork,

@@ -1,7 +1,6 @@
-using System.Data;
 using FluentValidation;
 
-namespace GymManagement.Application.Gyms.Commands;
+namespace GymManagement.Application.Gyms.Commands.CreateGym;
 
 public class CreateGymCommandValidator : AbstractValidator<CreateGymCommand>
 {

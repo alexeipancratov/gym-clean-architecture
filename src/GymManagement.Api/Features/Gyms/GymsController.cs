@@ -1,6 +1,7 @@
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
-using GymManagement.Application.Gyms.Commands;
+using GymManagement.Application.Gyms.Commands.AddTrainerToGym;
+using GymManagement.Application.Gyms.Commands.CreateGym;
 using GymManagement.Contracts.Gyms;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,5 +20,11 @@ public class GymsController(ISender sender) : ControllerBase
 
         return result
             .Map(gym => new GymResponse(gym.Id, gym.Name));
+    }
+    
+    [HttpPost("{gymId:guid}/trainers")]
+    public Task<Result> AddTrainerToGym(Guid subscriptionId, Guid gymId, AddTrainerToGymRequest request)
+    {
+        return sender.Send(new AddTrainerToGymCommand(subscriptionId, gymId, request.TrainerId));
     }
 }

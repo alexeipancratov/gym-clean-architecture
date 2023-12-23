@@ -41,4 +41,16 @@ public class Gym
         
         return Result.Success();
     }
+    
+    public Result AddTrainer(Guid trainerId)
+    {
+        if (_trainerIds.Contains(trainerId))
+        {
+            return Result.Conflict("Trainer already exists.");
+        }
+        
+        _trainerIds.Add(trainerId);
+        
+        return Result.Success();
+    }
 }
