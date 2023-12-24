@@ -16,7 +16,7 @@ public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
         builder.Property("_maxGyms")
             .HasColumnName("MaxGyms");
 
-        builder.Property("_adminId")
+        builder.Property("AdminId")
             .HasColumnName("AdminId");
         
         builder.Property(s => s.SubscriptionType)

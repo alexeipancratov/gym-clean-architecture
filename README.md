@@ -49,6 +49,13 @@ Model validation is responsible for validating the input data, e.g., if username
 
 In this project model validation is implemented right at the top of the application layer using the FluentValidation library as a cross-cutting concern using the MediatR's pipeline behaviors (see `src/GymManagement.Application/Behaviors/ValidationBehavior.cs`). Validators are implemented at the command request level.
 
+## Useful CLI commands
+
+`dotnet ef migrations add GymsAndSubscriptionGyms -p src/GymManagement.Infrastructure -s src/GymManagement.Api` -
+creates a new migration
+
+`dotnet ef database update -p src/GymManagement.Infrastructure -s src/GymManagement.Api` - updates the database
+
 ## License
 
 None

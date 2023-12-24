@@ -10,4 +10,13 @@ public abstract class Entity
     
     // Required for EF Core
     protected Entity() { }
+    
+    public List<IDomainEvent> PopDomainEvents()
+    {
+        var domainEvents = DomainEvents;
+        
+        DomainEvents.Clear();
+        
+        return domainEvents;
+    }
 }

@@ -20,6 +20,7 @@ builder.Services.AddControllers(mvcOptions => mvcOptions
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddProblemDetails(); // Adds required services for the UseExceptionHandler.
+builder.Services.AddHttpContextAccessor();
 
 // Application services
 builder.Services
@@ -29,6 +30,7 @@ builder.Services
 var app = builder.Build();
 
 app.UseExceptionHandler(); // Adds the global exception handler middleware (RFC 7807 Problem Details for HTTP APIs).
+app.AddInfrastructureMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

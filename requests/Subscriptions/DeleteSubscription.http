@@ -1,0 +1,4 @@
+@host=https://localhost:7047
+@subscriptionId=643cb1ac-c591-41c3-a1cc-be154ca9c6b1
+
+DELETE {{host}}/api/Subscriptions/{{subscriptionId}}

@@ -10,14 +10,20 @@ public class SubscriptionDeletedEventHandler(
     IUnitOfWork unitOfWork)
     : INotificationHandler<SubscriptionDeletedEvent>
 {
-    private ISubscriptionsRepository _subscriptionsRepository = subscriptionsRepository;
-    private IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly ISubscriptionsRepository _subscriptionsRepository = subscriptionsRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     
     public async Task Handle(SubscriptionDeletedEvent notification, CancellationToken cancellationToken)
     {
-        Subscription subscription =
-            await _subscriptionsRepository.GetByIdAsync(notification.SubscriptionId, cancellationToken)
-            ?? throw new InvalidOperationException("Subscription not found");
+        Subscription? subscription =
+            await _subscriptionsRepository.GetByIdAsync(notification.SubscriptionId, cancellationToken);
+
+        if (subscription == null)
+        {
+            // TODO: Add resilient error handling, which would notify a user post-factum that subscription
+            // failed to be deleted in the end.
+            throw new InvalidOperationException("Subscription not found");
+        }
         
         _subscriptionsRepository.Delete(subscription);
         await _unitOfWork.CommitChangesAsync(cancellationToken);
