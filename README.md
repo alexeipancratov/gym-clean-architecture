@@ -51,10 +51,29 @@ In this project model validation is implemented right at the top of the applicat
 
 ## Useful CLI commands
 
+Execute the following commands from the root directory of the project:
+
 `dotnet ef migrations add GymsAndSubscriptionGyms -p src/GymManagement.Infrastructure -s src/GymManagement.Api` -
 creates a new migration
 
 `dotnet ef database update -p src/GymManagement.Infrastructure -s src/GymManagement.Api` - updates the database
+
+## Eventual consistency using domain events
+
+This project relies on eventual consistency when handling complicated flows which involve updating data in multiple
+places, e.g, `DeleteSubscriptionCommandHandler`. In this case, Admin's subscription gets assigned to null, and then
+a domain event is being raised - `SubscriptionDeletedEvent`. Then corresponding event handlers handle deletion of
+actual and related data.
+
+In order to optimize the duration of request execution event handlers will be executed after the response is sent.
+This is handled in the `EventualConsistencyMiddleware`. This middleware executes its logic inside a DB transaction
+so that either all event handlers succeed or none of them do.
+
+This approach is the opposite to "transactional consistency" where an "orchestrator" handles all the logic surrounding a business use-case,
+thus making request processing faster. There're several benefits to this approach:
+- high performance
+- flexible error handling (side effects can be retried multiple times in the background without user knowing about it)
+- scalability
 
 ## License
 

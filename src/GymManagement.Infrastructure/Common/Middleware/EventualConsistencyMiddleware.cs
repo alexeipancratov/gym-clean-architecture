@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Http;
 namespace GymManagement.Infrastructure.Common.Middleware;
 
 /// <remarks>
-/// This approach is 
+/// This middleware wraps its logic in a transaction so that either all event handlers
+/// succeed or none of them do.
 /// </remarks>
 public class EventualConsistencyMiddleware(RequestDelegate next)
 {
