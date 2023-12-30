@@ -30,7 +30,7 @@ public class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest>? valid
         return (dynamic)Result.Invalid(
             validationResult.Errors.Select(e => new ValidationError
             {
-                Identifier = e.ErrorCode, ErrorMessage = e.ErrorMessage
+                Identifier = e.PropertyName, ErrorMessage = e.ErrorMessage
             }).ToArray());
     }
 }
