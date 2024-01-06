@@ -24,7 +24,9 @@ public class SqliteTestDatabase : IDisposable
             .UseSqlite(Connection)
             .Options;
 
-        var context = new GymManagementDbContext(options, null!);
+        // Here we create the DbContext with null dependencies
+        // because we only need connection from it when registering dependencies in the IoC container.
+        var context = new GymManagementDbContext(options, null!, null!);
 
         context.Database.EnsureCreated();
     }

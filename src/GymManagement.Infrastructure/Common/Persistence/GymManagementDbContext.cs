@@ -5,6 +5,7 @@ using GymManagement.Domain.Common;
 using GymManagement.Domain.Gyms;
 using GymManagement.Domain.Subscriptions;
 using GymManagement.Infrastructure.Common.Constants;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,8 @@ namespace GymManagement.Infrastructure.Common.Persistence;
 
 public class GymManagementDbContext(
     DbContextOptions options,
-    IHttpContextAccessor httpContextAccessor) : DbContext(options), IUnitOfWork
+    IHttpContextAccessor httpContextAccessor,
+    IPublisher publisher) : DbContext(options), IUnitOfWork
 {
     /// <remarks>
     /// IHttpContextAccessor is a singleton, while HttpContext is scoped.
@@ -22,13 +24,15 @@ public class GymManagementDbContext(
     /// </remarks>
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     
+    private readonly IPublisher _publisher = publisher;
+    
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
     
     public DbSet<Gym> Gyms => Set<Gym>();
     
     public DbSet<Admin> Admins => Set<Admin>();
 
-    public Task<int> CommitChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> CommitChangesAsync(CancellationToken cancellationToken = default)
     {
         // get all domain events
         var domainEvents = ChangeTracker
@@ -36,11 +40,30 @@ public class GymManagementDbContext(
             .Select(entry => entry.Entity.PopDomainEvents())
             .SelectMany(events => events)
             .ToList();
-        
-        AddDomainEventsToOfflineProcessingQueue(domainEvents);
-        
-        return SaveChangesAsync(cancellationToken);
+
+        // We don't want the user to wait for the domain events to be published
+        if (IsUserWaitingOnline())
+        {
+            AddDomainEventsToOfflineProcessingQueue(domainEvents);
+        }
+        else
+        {
+            // E.g., there won't be a user waiting online if we're running tests.
+            await PublishEvents(domainEvents, cancellationToken);
+        }
+
+        return await SaveChangesAsync(cancellationToken);
     }
+
+    private async Task PublishEvents(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken)
+    {
+        foreach (IDomainEvent domainEvent in domainEvents)
+        {
+            await _publisher.Publish(domainEvent, cancellationToken);
+        }
+    }
+
+    private bool IsUserWaitingOnline() => _httpContextAccessor.HttpContext is not null;
 
     private void AddDomainEventsToOfflineProcessingQueue(List<IDomainEvent> domainEvents)
     {

@@ -1,5 +1,6 @@
 using Ardalis.Result;
 using FluentAssertions;
+using GymManagement.Application.Gyms.Commands.CreateGym;
 using GymManagement.Application.SubcutaneousTests.Common;
 using GymManagement.Domain.Gyms;
 using GymManagement.Domain.Subscriptions;
@@ -29,6 +30,25 @@ public class CreateGymTests(MediatorFactory mediatorFactory)
         // Assert
         createGymResult.IsSuccess.Should().BeTrue();
         createGymResult.Value.SubscriptionId.Should().Be(subscription.Id);
+    }
+    
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(200)]
+    public async Task CreateGym_WhenCommandContainsInvalidData_ShouldReturnValidationError(int nameLength)
+    {
+        // Arrange
+        string name = new('a', nameLength);
+        var createGymCommand = GymCommandFactory.CreateCreateGymCommand(
+            name: name);
+        
+        // Act
+        Result<Gym> createGymResult = await _mediator.Send(createGymCommand);
+        
+        // Assert
+        createGymResult.IsSuccess.Should().BeFalse();
+        createGymResult.ValidationErrors.Should().Contain(e => e.Identifier == nameof(CreateGymCommand.Name));
     }
 
     private async Task<Subscription> CreateSubscription()
