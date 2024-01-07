@@ -29,16 +29,16 @@ public class ValidationBehaviorTests
     public async Task InvokeBehavior_WhenValidatorIsValid_ShouldInvokeNextBehavior()
     {
         // Arrange
-        Gym gym = GymFactory.CreateGym();
+        var gym = GymFactory.CreateGym();
         _mockNextBehavior.Invoke().Returns(Result<Gym>.Success(gym));
         
-        CreateGymCommand createGymCommand = GymCommandFactory.CreateCreateGymCommand();
+        var createGymCommand = GymCommandFactory.CreateCreateGymCommand();
         _mockValidator
             .ValidateAsync(createGymCommand, Arg.Any<CancellationToken>())
             .Returns(new FluentValidation.Results.ValidationResult());
         
         // Act
-        Result<Gym> result = await _sut.Handle(createGymCommand, _mockNextBehavior, CancellationToken.None);
+        var result = await _sut.Handle(createGymCommand, _mockNextBehavior, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -49,13 +49,13 @@ public class ValidationBehaviorTests
     public async Task InvokeBehavior_WhenValidatorIsInvalid_ShouldReturnInvalidResult()
     {
         // Arrange
-        CreateGymCommand createGymCommand = GymCommandFactory.CreateCreateGymCommand();
+        var createGymCommand = GymCommandFactory.CreateCreateGymCommand();
         _mockValidator
             .ValidateAsync(createGymCommand, Arg.Any<CancellationToken>())
             .Returns(new ValidationResult([new ValidationFailure("Name", "Name is required.")]));
         
         // Act
-        Result<Gym> result = await _sut.Handle(createGymCommand, _mockNextBehavior, CancellationToken.None);
+        var result = await _sut.Handle(createGymCommand, _mockNextBehavior, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeFalse();

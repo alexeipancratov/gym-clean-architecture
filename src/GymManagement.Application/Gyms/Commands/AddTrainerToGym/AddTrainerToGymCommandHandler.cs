@@ -15,14 +15,14 @@ public class AddTrainerToGymCommandHandler(
     
     public async Task<Result> Handle(AddTrainerToGymCommand request, CancellationToken cancellationToken)
     {
-        Gym? gym = await _gymsRepository.GetByIdAsync(request.GymId, cancellationToken);
+        var gym = await _gymsRepository.GetByIdAsync(request.GymId, cancellationToken);
         
         if (gym is null)
         {
             return Result.NotFound("Gym not found");
         }
         
-        Result addTrainerResult = gym.AddTrainer(request.TrainerId);
+        var addTrainerResult = gym.AddTrainer(request.TrainerId);
         
         if (!addTrainerResult.IsSuccess)
         {

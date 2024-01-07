@@ -47,7 +47,7 @@ public class CreateSubscriptionTests
         
         var theoryData = new TheoryData<SubscriptionType>();
 
-        foreach (SubscriptionType subscriptionType in subscriptionTypes)
+        foreach (var subscriptionType in subscriptionTypes)
         {
             theoryData.Add(subscriptionType);
         }

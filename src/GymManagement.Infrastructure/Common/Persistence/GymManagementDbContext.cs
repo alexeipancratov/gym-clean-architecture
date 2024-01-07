@@ -57,7 +57,7 @@ public class GymManagementDbContext(
 
     private async Task PublishEvents(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken)
     {
-        foreach (IDomainEvent domainEvent in domainEvents)
+        foreach (var domainEvent in domainEvents)
         {
             await _publisher.Publish(domainEvent, cancellationToken);
         }

@@ -19,13 +19,13 @@ public class CreateGymTests(MediatorFactory mediatorFactory)
     public async Task CreateGym_WhenValidCommand_ShouldCreateGym()
     {
         // Arrange
-        Subscription subscription = await CreateSubscription();
+        var subscription = await CreateSubscription();
 
         var createGymCommand = GymCommandFactory.CreateCreateGymCommand(
             subscriptionId: subscription.Id);
         
         // Act
-        Result<Gym> createGymResult = await _mediator.Send(createGymCommand);
+        var createGymResult = await _mediator.Send(createGymCommand);
         
         // Assert
         createGymResult.IsSuccess.Should().BeTrue();
@@ -44,7 +44,7 @@ public class CreateGymTests(MediatorFactory mediatorFactory)
             name: name);
         
         // Act
-        Result<Gym> createGymResult = await _mediator.Send(createGymCommand);
+        var createGymResult = await _mediator.Send(createGymCommand);
         
         // Assert
         createGymResult.IsSuccess.Should().BeFalse();

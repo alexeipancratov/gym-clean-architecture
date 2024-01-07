@@ -25,7 +25,7 @@ public class EventualConsistencyMiddleware(RequestDelegate next)
                 if (context.Items.TryGetValue(DomainEventsConstants.HttpContextDomainEventsQueueItemKey, out var value)
                     && value is Queue<IDomainEvent> domainEventQueue)
                 {
-                    while (domainEventQueue!.TryDequeue(out IDomainEvent? domainEvent))
+                    while (domainEventQueue!.TryDequeue(out var domainEvent))
                     {
                         await publisher.Publish(domainEvent);
                     }

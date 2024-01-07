@@ -18,7 +18,7 @@ public class DeleteSubscriptionCommandHandler(
     
     public async Task<Result> Handle(DeleteSubscriptionCommand request, CancellationToken cancellationToken)
     {
-        Subscription? subscription = await _subscriptionsRepository.GetByIdAsync(request.SubscriptionId,
+        var subscription = await _subscriptionsRepository.GetByIdAsync(request.SubscriptionId,
             cancellationToken);
         
         if (subscription == null)
@@ -26,7 +26,7 @@ public class DeleteSubscriptionCommandHandler(
             return Result.NotFound("Subscription not found");
         }
         
-        Admin? admin = await _adminsRepository.GetByIdAsync(subscription.AdminId);
+        var admin = await _adminsRepository.GetByIdAsync(subscription.AdminId);
         
         if (admin == null)
         {
