@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// These conventions are being used by the TranslateResultToActionResultAttribute.
+// These conventions are being used by the TranslateResultToActionResultAttribute only.
 builder.Services.AddControllers(mvcOptions => mvcOptions
     .AddResultConvention(resultStatusMap => resultStatusMap
         .AddDefaultMap()
