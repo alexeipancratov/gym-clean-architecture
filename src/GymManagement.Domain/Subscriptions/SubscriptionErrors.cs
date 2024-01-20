@@ -1,12 +1,11 @@
-using Ardalis.Result;
+using GymManagement.Core.ErrorHandling;
 
 namespace GymManagement.Domain.Subscriptions;
 
 public static class SubscriptionErrors
 {
-    public static readonly ValidationError CannotHaveMoreGymsThanSubscriptionAllows = new()
-    {
-        Identifier = "subscription.cannotHaveMoreGymsThanSubscriptionAllows",
-        ErrorMessage = "Cannot have more gyms than subscription allows"
-    };
+    public static readonly OperationError CannotHaveMoreGymsThanSubscriptionAllows
+        = OperationError.Invalid(
+            "Cannot have more gyms than subscription allows",
+            "subscription.cannotHaveMoreGymsThanSubscriptionAllows");
 }

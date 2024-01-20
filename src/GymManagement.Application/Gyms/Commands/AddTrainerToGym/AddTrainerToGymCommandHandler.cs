@@ -1,6 +1,6 @@
-using Ardalis.Result;
+using CSharpFunctionalExtensions;
 using GymManagement.Application.Common.Interfaces;
-using GymManagement.Domain.Gyms;
+using GymManagement.Core.ErrorHandling;
 using MediatR;
 
 namespace GymManagement.Application.Gyms.Commands.AddTrainerToGym;
@@ -8,18 +8,18 @@ namespace GymManagement.Application.Gyms.Commands.AddTrainerToGym;
 public class AddTrainerToGymCommandHandler(
     IGymsRepository gymsRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<AddTrainerToGymCommand, Result>
+    : IRequestHandler<AddTrainerToGymCommand, UnitResult<OperationError>>
 {
     private readonly IGymsRepository _gymsRepository = gymsRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     
-    public async Task<Result> Handle(AddTrainerToGymCommand request, CancellationToken cancellationToken)
+    public async Task<UnitResult<OperationError>> Handle(AddTrainerToGymCommand request, CancellationToken cancellationToken)
     {
         var gym = await _gymsRepository.GetByIdAsync(request.GymId, cancellationToken);
         
         if (gym is null)
         {
-            return Result.NotFound("Gym not found");
+            return UnitResult.Failure(OperationError.NotFound("Gym not found"));
         }
         
         var addTrainerResult = gym.AddTrainer(request.TrainerId);
@@ -31,7 +31,7 @@ public class AddTrainerToGymCommandHandler(
 
         _gymsRepository.Update(gym);
         await _unitOfWork.CommitChangesAsync(cancellationToken);
-        
-        return Result.Success();
+
+        return UnitResult.Success<OperationError>();
     }
 }

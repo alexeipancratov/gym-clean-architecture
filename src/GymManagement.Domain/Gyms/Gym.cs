@@ -1,4 +1,5 @@
-using Ardalis.Result;
+using CSharpFunctionalExtensions;
+using GymManagement.Core.ErrorHandling;
 using GymManagement.Domain.Rooms;
 using Throw;
 
@@ -28,29 +29,29 @@ public class Gym
     
     private Gym() {}
 
-    public Result AddRoom(Room room)
+    public UnitResult<OperationError> AddRoom(Room room)
     {
         _roomIds.Throw().IfContains(room.Id);
         
         if (_roomIds.Count >= _maxRooms)
         {
-            return Result.Invalid(GymErrors.CannotHaveMoreRoomsThanSubscriptionAllows);
+            return UnitResult.Failure(GymErrors.CannotHaveMoreRoomsThanSubscriptionAllows);
         }
         
         _roomIds.Add(room.Id);
-        
-        return Result.Success();
+
+        return UnitResult.Success<OperationError>();
     }
     
-    public Result AddTrainer(Guid trainerId)
+    public UnitResult<OperationError> AddTrainer(Guid trainerId)
     {
         if (_trainerIds.Contains(trainerId))
         {
-            return Result.Conflict("Trainer already exists.");
+            return UnitResult.Failure(OperationError.Conflict("Trainer already exists"));
         }
         
         _trainerIds.Add(trainerId);
-        
-        return Result.Success();
+
+        return UnitResult.Success<OperationError>();
     }
 }

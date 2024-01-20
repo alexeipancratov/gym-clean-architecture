@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.Result" Version="7.2.0" />
     <PackageReference Include="Ardalis.SmartEnum" Version="7.0.0" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.40.3" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Throw" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GymManagement.Core\GymManagement.Core.csproj" />
   </ItemGroup>
 
 </Project>

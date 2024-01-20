@@ -1,6 +1,4 @@
-using Ardalis.Result;
 using FluentAssertions;
-using GymManagement.Domain.Gyms;
 using GymManagement.Domain.Subscriptions;
 using TestCommon.Gyms;
 using TestCommon.Subscriptions;
@@ -28,6 +26,6 @@ public class SubscriptionTests
 
         var lastGymResult = addGymResults.Last();
         lastGymResult.IsSuccess.Should().BeFalse();
-        lastGymResult.ValidationErrors.First().Should().Be(SubscriptionErrors.CannotHaveMoreGymsThanSubscriptionAllows);
+        lastGymResult.Error.Should().Be(SubscriptionErrors.CannotHaveMoreGymsThanSubscriptionAllows);
     }
 }

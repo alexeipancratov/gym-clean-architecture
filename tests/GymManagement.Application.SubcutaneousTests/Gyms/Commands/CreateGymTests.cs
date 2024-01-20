@@ -1,8 +1,6 @@
-using Ardalis.Result;
 using FluentAssertions;
 using GymManagement.Application.Gyms.Commands.CreateGym;
 using GymManagement.Application.SubcutaneousTests.Common;
-using GymManagement.Domain.Gyms;
 using GymManagement.Domain.Subscriptions;
 using MediatR;
 using TestCommon.Gyms;
@@ -48,7 +46,7 @@ public class CreateGymTests(MediatorFactory mediatorFactory)
         
         // Assert
         createGymResult.IsSuccess.Should().BeFalse();
-        createGymResult.ValidationErrors.Should().Contain(e => e.Identifier == nameof(CreateGymCommand.Name));
+        createGymResult.Error.ValidationErrors.Should().Contain(e => e.Identifier == nameof(CreateGymCommand.Name));
     }
 
     private async Task<Subscription> CreateSubscription()

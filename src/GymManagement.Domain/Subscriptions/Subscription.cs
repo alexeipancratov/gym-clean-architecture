@@ -1,4 +1,5 @@
-using Ardalis.Result;
+using CSharpFunctionalExtensions;
+using GymManagement.Core.ErrorHandling;
 using GymManagement.Domain.Gyms;
 using Throw;
 
@@ -39,7 +40,7 @@ public class Subscription
     {
     }
     
-    public Result AddGym(Gym gym)
+    public UnitResult<OperationError> AddGym(Gym gym)
     {
         // It's not a business rule in our case. Just an unexpected behavior.
         // I.e., it's not something that user provides as input.
@@ -47,12 +48,12 @@ public class Subscription
         
         if (_gymIds.Count >= _maxGyms)
         {
-            return Result.Invalid(SubscriptionErrors.CannotHaveMoreGymsThanSubscriptionAllows);
+            return UnitResult.Failure(SubscriptionErrors.CannotHaveMoreGymsThanSubscriptionAllows);
         }
         
         _gymIds.Add(gym.Id);
-        
-        return Result.Success();
+
+        return UnitResult.Success<OperationError>();
     }
     
     public int GetMaxDailySessions() => SubscriptionType.Name switch

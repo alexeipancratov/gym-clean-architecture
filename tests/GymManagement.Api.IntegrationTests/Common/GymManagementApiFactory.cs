@@ -36,7 +36,7 @@ public class GymManagementApiFactory : WebApplicationFactory<IAssemblyMaker>, IA
         return Task.CompletedTask;
     }
 
-    public Task DisposeAsync()
+    public new Task DisposeAsync()
     {
         _testDatabase.Dispose();
 

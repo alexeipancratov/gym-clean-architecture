@@ -1,9 +1,10 @@
-using Ardalis.Result;
+using CSharpFunctionalExtensions;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using GymManagement.Application.Common.Behaviors;
 using GymManagement.Application.Gyms.Commands.CreateGym;
+using GymManagement.Core.ErrorHandling;
 using GymManagement.Domain.Gyms;
 using MediatR;
 using NSubstitute;
@@ -13,16 +14,16 @@ namespace GymManagement.Application.UnitTests.Common.Behaviors;
 
 public class ValidationBehaviorTests
 {
-    private readonly RequestHandlerDelegate<Result<Gym>> _mockNextBehavior;
+    private readonly RequestHandlerDelegate<Result<Gym, OperationError>> _mockNextBehavior;
     private readonly IValidator<CreateGymCommand> _mockValidator;
-    private readonly ValidationBehavior<CreateGymCommand,Result<Gym>> _sut;
+    private readonly ValidationBehavior<CreateGymCommand,Result<Gym, OperationError>> _sut;
 
     public ValidationBehaviorTests()
     {
-        _mockNextBehavior = Substitute.For<RequestHandlerDelegate<Result<Gym>>>();
+        _mockNextBehavior = Substitute.For<RequestHandlerDelegate<Result<Gym, OperationError>>>();
         _mockValidator = Substitute.For<IValidator<CreateGymCommand>>();
         
-        _sut = new ValidationBehavior<CreateGymCommand, Result<Gym>>(_mockValidator);
+        _sut = new ValidationBehavior<CreateGymCommand, Result<Gym, OperationError>>(_mockValidator);
     }
     
     [Fact]
@@ -30,7 +31,7 @@ public class ValidationBehaviorTests
     {
         // Arrange
         var gym = GymFactory.CreateGym();
-        _mockNextBehavior.Invoke().Returns(Result<Gym>.Success(gym));
+        _mockNextBehavior.Invoke().Returns(Result.Success<Gym, OperationError>(gym));
         
         var createGymCommand = GymCommandFactory.CreateCreateGymCommand();
         _mockValidator
@@ -59,8 +60,8 @@ public class ValidationBehaviorTests
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.ValidationErrors.Should().HaveCount(1);
-        result.ValidationErrors.First().Identifier.Should().Be("Name");
-        result.ValidationErrors.First().ErrorMessage.Should().Be("Name is required.");
+        result.Error.ValidationErrors.Should().HaveCount(1);
+        result.Error.ValidationErrors.First().Identifier.Should().Be("Name");
+        result.Error.ValidationErrors.First().Message.Should().Be("Name is required.");
     }
 }

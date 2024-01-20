@@ -30,7 +30,7 @@ public class CreateSubscriptionTests
         var response = await _httpClient.PostAsJsonAsync("/api/subscriptions", createSubscriptionRequest);
         
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.Created);
         
         var subscriptionResponse = await response.Content.ReadFromJsonAsync<SubscriptionResponse>();
         subscriptionResponse.Should().NotBeNull();

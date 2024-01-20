@@ -1,5 +1,5 @@
-using Ardalis.Result;
 using FluentValidation;
+using GymManagement.Core.ErrorHandling;
 using MediatR;
 
 namespace GymManagement.Application.Common.Behaviors;
@@ -26,11 +26,10 @@ public class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest>? valid
             return await next();
         }
         
-        // Works in runtime
-        return (dynamic)Result.Invalid(
-            validationResult.Errors.Select(e => new ValidationError
-            {
-                Identifier = e.PropertyName, ErrorMessage = e.ErrorMessage
-            }).ToArray());
+        // In runtime it will be implicitly casted to either Result or OperationError (both generic).
+        // Currently, we don't support non-generic Result.
+        return (dynamic)OperationError.Invalid("Invalid fields", validationResult.Errors
+            .Select(e => new ValidationError(e.PropertyName, e.ErrorMessage))
+            .ToArray());
     }
 }
