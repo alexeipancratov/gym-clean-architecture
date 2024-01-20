@@ -27,7 +27,7 @@ public class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest>? valid
         }
         
         // In runtime it will be implicitly casted to either Result or OperationError (both generic).
-        // Currently, we don't support non-generic Result.
+        // Currently, we don't support non-generic Result, because it works with string errors only.
         return (dynamic)OperationError.Invalid("Invalid fields", validationResult.Errors
             .Select(e => new ValidationError(e.PropertyName, e.ErrorMessage))
             .ToArray());
