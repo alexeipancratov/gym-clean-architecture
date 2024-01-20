@@ -36,9 +36,8 @@ public class CreateSubscriptionTests
         subscriptionResponse.Should().NotBeNull();
         subscriptionResponse!.SubscriptionType.Should().Be(subscriptionType);
         
-        // TODO: Implement a proper Created response.
-        // response.Headers.Location.Should().NotBeNull();
-        // response.Headers.Location!.PathAndQuery.Should().Be($"/api/subscriptions/{subscriptionResponse.Id}");
+        response.Headers.Location.Should().NotBeNull();
+        response.Headers.Location!.PathAndQuery.Should().Be($"/api/Subscriptions/{subscriptionResponse.Id}");
     }
     
     public static TheoryData<SubscriptionType> ListSubscriptionTypes()

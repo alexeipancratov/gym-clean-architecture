@@ -30,7 +30,7 @@ namespace GymManagement.Api.Features.Subscriptions
             return result
                 .Match(
                     subscription => CreatedAtAction(
-                        nameof(CreateSubscription),
+                        nameof(GetSubscription),
                         new { subscriptionId = subscription.Id },
                         new SubscriptionResponse(
                             subscription.Id,
@@ -38,7 +38,7 @@ namespace GymManagement.Api.Features.Subscriptions
                     Problem);
         }
         
-        [HttpGet("{subscriptionId}")]
+        [HttpGet("{subscriptionId:guid}")]
         public async Task<IActionResult> GetSubscription(Guid subscriptionId)
         {
             var result = await _sender.Send(new GetSubscriptionCommand(subscriptionId));
