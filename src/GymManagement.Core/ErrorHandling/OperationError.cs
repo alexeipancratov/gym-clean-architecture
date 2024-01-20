@@ -1,5 +1,8 @@
 namespace GymManagement.Core.ErrorHandling;
 
+/// <summary>
+/// Represents an error that occurred during the execution of an operation.
+/// </summary>
 public class OperationError
 {
     public string Message { get; }
@@ -17,7 +20,8 @@ public class OperationError
         Status = status;
     }
     
-    private OperationError(string message, string code, OperationErrorStatus status, IReadOnlyList<ValidationError> validationErrors)
+    private OperationError(string message, string code, OperationErrorStatus status,
+        IReadOnlyList<ValidationError> validationErrors)
     {
         Message = message;
         Code = code;
@@ -34,10 +38,11 @@ public class OperationError
     public static OperationError Invalid(string message, string code = "invalid")
         => new(message, code, OperationErrorStatus.Invalid);
     
-    public static OperationError Invalid(string message, IReadOnlyList<ValidationError> validationErrors, string code = "invalid")
+    public static OperationError Invalid(
+        string message, IReadOnlyList<ValidationError> validationErrors, string code = "invalid")
         => new(message, code, OperationErrorStatus.Invalid, validationErrors);
     
-    public static OperationError  Unauthorized(string message, string code = "unauthorized")
+    public static OperationError Unauthorized(string message, string code = "unauthorized")
         => new(message, code, OperationErrorStatus.Unauthorized);
     
     public static OperationError Internal(string message, string code = "internal")

@@ -4,6 +4,7 @@ using GymManagement.Domain.Admins;
 using GymManagement.Domain.Common;
 using GymManagement.Domain.Gyms;
 using GymManagement.Domain.Subscriptions;
+using GymManagement.Domain.Users;
 using GymManagement.Infrastructure.Common.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,8 @@ public class GymManagementDbContext(
     public DbSet<Gym> Gyms => Set<Gym>();
     
     public DbSet<Admin> Admins => Set<Admin>();
+    
+    public DbSet<User> Users => Set<User>();
 
     public async Task<int> CommitChangesAsync(CancellationToken cancellationToken = default)
     {
