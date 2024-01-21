@@ -18,6 +18,8 @@ public class JwtTokenGenerator(IOptions<JwtSettings> jwtOptions) : IJwtTokenGene
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+        // NOTE: In our app we handle both generation and parsing of the token.
+        // Usually, it won't be the case, and we'd have an Identity Provider.
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Name, user.FirstName),

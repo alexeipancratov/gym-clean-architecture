@@ -1,20 +1,11 @@
+using GymManagement.Api;
 using GymManagement.Application;
 using GymManagement.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-// These conventions are being used by the TranslateResultToActionResultAttribute only.
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddProblemDetails(); // Adds required services for the UseExceptionHandler.
-builder.Services.AddHttpContextAccessor();
-
-// Application services
 builder.Services
+    .AddPresentation()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 

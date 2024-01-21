@@ -1,8 +1,10 @@
 @host=https://localhost:7047
-@userId=d110bcd4-0cdb-4f93-9b3c-0d03cc84e656
+@userId=a0863ac2-0e9e-499f-afcf-a8f3dfd4b754
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiRG9lIiwiZW1haWwiOiJqb2huQG1hbnRpbmJhbmQuY29tIiwiaWQiOiJhMDg2M2FjMi0wZTllLTQ5OWYtYWZjZi1hOGYzZGZkNGI3NTQiLCJwZXJtaXNzaW9ucyI6WyJneW1zOmNyZWF0ZSIsImd5bXM6dXBkYXRlIl0sImV4cCI6MTcwNTg4NDI2NywiaXNzIjoiR3ltTWFuYWdlbWVudCIsImF1ZCI6Ikd5bU1hbmFnZW1lbnQifQ.yGyZSE7hppPJAqJx6qz094HQXu2EIiuizX-gk4tGWv0
 
 ### Admin
 POST {{host}}/users/{{userId}}/profiles/admin
+Authorization: Bearer {{token}}
 
 ### Trainer
 POST {{host}}/users/{{userId}}/profiles/trainer
