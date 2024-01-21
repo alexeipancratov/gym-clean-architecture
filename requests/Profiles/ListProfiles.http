@@ -1,0 +1,4 @@
+@host=https://localhost:7047
+@userId=d110bcd4-0cdb-4f93-9b3c-0d03cc84e656
+
+GET {{host}}/users/{{userId}}/profiles

@@ -1,5 +1,5 @@
 @host=https://localhost:7047
-@adminId=2150E333-8FDC-42A3-9474-1A3956D46DE8
+@adminId=9f351e6c-cdd0-4c0f-86a2-ec9bb06e6475
 
 POST {{host}}/api/Subscriptions
 Content-Type: application/json
