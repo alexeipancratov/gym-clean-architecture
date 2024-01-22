@@ -1,9 +1,11 @@
 @host=https://localhost:7047
 @subscriptionId = 8C764A79-1199-4A32-B86F-A757F21B546A
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWxleGVpIiwiZmFtaWx5X25hbWUiOiJQIiwiZW1haWwiOiJhbWlrb0BtYW50aW5iYW5kLmNvbSIsImlkIjoiZDExMGJjZDQtMGNkYi00ZjkzLTliM2MtMGQwM2NjODRlNjU2IiwicGVybWlzc2lvbnMiOlsiZ3ltczpjcmVhdGUiLCJneW1zOnVwZGF0ZSJdLCJhZG1pbklkIjoiOWYzNTFlNmMtY2RkMC00YzBmLTg2YTItZWM5YmIwNmU2NDc1Iiwicm9sZXMiOiJBZG1pbiIsImV4cCI6MTcwNTg5NTUyMywiaXNzIjoiR3ltTWFuYWdlbWVudCIsImF1ZCI6Ikd5bU1hbmFnZW1lbnQifQ.iDM3ezWaaa_7Ev7zUpMouAh6OuA4SIWtPT5HgI18q1w
 
 POST {{host}}/subscriptions/{{subscriptionId}}/gyms
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "name": "A"
+  "name": "A first gym"
 }

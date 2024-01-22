@@ -16,7 +16,7 @@ public class CurrentUserProvider(IHttpContextAccessor httpContextAccessor) : ICu
         var idClaim = user.Claims
             .First(c => c.Type == "id");
         var permissionClaims = user.Claims
-            .Where(c => c.Type == "permission")
+            .Where(c => c.Type == "permissions")
             .SelectMany(c => c.Value.Split(','))
             .ToList();
         
