@@ -75,6 +75,14 @@ thus making request processing faster. There're several benefits to this approac
 - flexible error handling (side effects can be retried multiple times in the background without user knowing about it)
 - scalability
 
+## Authentication and authorization
+
+For authentication we're using Authorized attribute with JWT bearer authentication scheme.
+For authorization we're using MediatR behaviors, specifically `AuthorizationBehavior` which checks if the user is authorized to execute the command.
+
+Currently it's being discussed whether it's a good idea to use MediatR for authorization, or if this should be handled in the Presentation layer.
+MediatR is a good candidate for this, because authorization is business rule. So it makes sense to handle only authentication in the Presentation layer,
+
 ## License
 
 None
