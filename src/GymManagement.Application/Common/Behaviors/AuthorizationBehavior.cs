@@ -25,6 +25,7 @@ public class AuthorizationBehavior<TRequest, TResponse>(ICurrentUserProvider cur
             return next();
         }
         
+        // Check permissions
         var requiredPermissions = authorizeAttributes
             .SelectMany(a => a.Permissions?.Split(',') ?? [])
             .ToList();
@@ -32,6 +33,16 @@ public class AuthorizationBehavior<TRequest, TResponse>(ICurrentUserProvider cur
         var currentUser = currentUserProvider.GetCurrentUser();
         
         if (requiredPermissions.Except(currentUser.Permissions).Any())
+        {
+            return (dynamic)OperationError.Unauthorized("User is not authorized to perform this action");
+        }
+        
+        // Check roles
+        var requiredRoles = authorizeAttributes
+            .SelectMany(a => a.Roles?.Split(',') ?? [])
+            .ToList();
+        
+        if (requiredRoles.Except(currentUser.Roles).Any())
         {
             return (dynamic)OperationError.Unauthorized("User is not authorized to perform this action");
         }

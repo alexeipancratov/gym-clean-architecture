@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using GymManagement.Application.Common.Interfaces;
 using GymManagement.Application.Common.Models;
 using Throw;
@@ -10,16 +11,22 @@ public class CurrentUserProvider(IHttpContextAccessor httpContextAccessor) : ICu
     
     public CurrentUser GetCurrentUser()
     {
+        var id = GetClaimValues("id")
+            .Select(Guid.Parse)
+            .First();
+        var permissions = GetClaimValues("permissions");
+        var roles = GetClaimValues(ClaimTypes.Role);
+        
+        return new CurrentUser(id, permissions, roles);
+    }
+    
+    private IReadOnlyList<string> GetClaimValues(string claimType)
+    {
         _httpContextAccessor.HttpContext.ThrowIfNull();
         
-        var user = _httpContextAccessor.HttpContext.User;
-        var idClaim = user.Claims
-            .First(c => c.Type == "id");
-        var permissionClaims = user.Claims
-            .Where(c => c.Type == "permissions")
-            .SelectMany(c => c.Value.Split(','))
+        return _httpContextAccessor.HttpContext.User.Claims
+            .Where(c => c.Type == claimType)
+            .Select(c => c.Value)
             .ToList();
-        
-        return new CurrentUser(Guid.Parse(idClaim.Value), permissionClaims);
     }
 }
