@@ -69,19 +69,23 @@ In order to optimize the duration of request execution event handlers will be ex
 This is handled in the `EventualConsistencyMiddleware`. This middleware executes its logic inside a DB transaction
 so that either all event handlers succeed or none of them do.
 
-This approach is the opposite to "transactional consistency" where an "orchestrator" handles all the logic surrounding a business use-case,
-thus making request processing faster. There're several benefits to this approach:
+This approach is the opposite to "transactional consistency" where an "orchestrator" handles all the logic surrounding
+a business use-case, thus making request processing faster. There're several benefits to this approach:
 - high performance
 - flexible error handling (side effects can be retried multiple times in the background without user knowing about it)
 - scalability
 
 ## Authentication and authorization
 
-For authentication we're using Authorized attribute with JWT bearer authentication scheme.
-For authorization we're using MediatR behaviors, specifically `AuthorizationBehavior` which checks if the user is authorized to execute the command.
+For authentication we're using `Authorized` attribute with the JWT bearer authentication scheme on the controller level.
+This attribute can be used for both authentication and authorization, but we're leveraging it only for authorization.
+All the authentication logic is handled by the framework, and it's configured in the Infrastructure layer DI registration.
+For authorization we're using MediatR behaviors, specifically `AuthorizationBehavior` which checks if the user is
+authorized to execute the command.
 
-Currently it's being discussed whether it's a good idea to use MediatR for authorization, or if this should be handled in the Presentation layer.
-MediatR is a good candidate for this, because authorization is business rule. So it makes sense to handle only authentication in the Presentation layer,
+Currently it's being discussed whether it's a good idea to use MediatR for authorization, or if this should be handled
+in the Presentation layer. MediatR is a good candidate for this, because authorization is a business rule. So it makes
+sense to handle only authentication in the Presentation layer.
 
 ## License
 

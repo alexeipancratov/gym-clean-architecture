@@ -6,6 +6,9 @@ using MediatR;
 
 namespace GymManagement.Application.Common.Behaviors;
 
+/// <summary>
+/// This behavior is responsible for checking user permissions and roles for a given MediatR request.
+/// </summary>
 public class AuthorizationBehavior<TRequest, TResponse>(ICurrentUserProvider currentUserProvider)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

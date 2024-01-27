@@ -4,6 +4,9 @@ using MediatR;
 
 namespace GymManagement.Application.Common.Behaviors;
 
+/// <summary>
+/// This behavior is responsible for validating MediatR requests data.
+/// </summary>
 public class ValidationBehavior<TRequest, TResponse>(IValidator<TRequest>? validator = null)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
